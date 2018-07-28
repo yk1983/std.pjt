@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- MySQL 설정 -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close"> <property name="driverClassName" value="com.mysql.jdbc.Driver"/> 
+		<property name="url" value="jdbc:mysql://IP주소/스키마"/> <property name="username" 
+		value="아이디"/> <property name="password" value="비밀번호"/> </bean> -->
+
+	<!-- 오라클 설정 -->
+	<bean id="dataSourceSpied" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="DBTEST" />
+		<property name="password" value="dbtest" />
+		<!-- <property name="username" value="scott" />
+		<property name="password" value="tiger" /> -->
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<aop:config proxy-target-class="true">
+		<aop:pointcut
+			expression="execution(* jp..controller.*Controller.*(..)) or execution(* jp..service.*Impl.*(..)) or execution(* jp..dao.*DAO.*(..))"
+			id="serviceOperation" />
+		<aop:advisor id="transactionAdvisor" advice-ref="txAdvisor"
+			pointcut-ref="serviceOperation" />
+	</aop:config>
+	<tx:advice id="txAdvisor" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="update*" rollback-for="Exeption" />
+			<tx:method name="delete*" rollback-for="Exeption" />
+			<tx:method name="insert*" rollback-for="Exeption" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceSpied" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL         :  " />
+			</bean>
+		</property>
+	</bean>
+
+</beans>

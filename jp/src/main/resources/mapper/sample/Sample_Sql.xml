@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sample">
+
+	<select id="getSampleList" parameterType="hashmap" resultType="hashmap">
+	SELECT 	USER_NO
+	,		USER_NAME
+	,		USER_EMAIL
+	,		SUBSTR(USER_PASSWD,1,1) || LPAD('*',length(USER_PASSWD)-2,'*') || SUBSTR(USER_PASSWD, length(USER_PASSWD), 1) AS USER_PASSWD
+	,   	TO_CHAR(REG_DTM, 'YYYY-MM-DD') AS REG_DTM
+	FROM	TB_SAMPLE
+	ORDER BY
+			USER_NO
+	</select>
+	
+	<select id="getSampleOne" parameterType="hashmap" resultType="hashmap">
+	SELECT 	USER_NO
+	,		USER_NAME
+	,		USER_EMAIL
+	,		USER_PASSWD
+	,   	TO_CHAR(REG_DTM, 'YYYY-MM-DD') AS REG_DTM
+	FROM	TB_SAMPLE
+	WHERE	USER_NO = #{user_no}
+	</select>
+	
+	<insert id="insertSample" parameterType="hashmap">
+	INSERT INTO TB_SAMPLE
+	(
+		USER_NO
+	,	USER_NAME
+	,	USER_EMAIL
+	,	USER_PASSWD
+	,   REG_DTM
+	)
+	VALUES
+	(
+		SEQ_SAMPLE.NEXTVAL
+	,	#{user_name}
+	,	#{user_email}
+	,	#{user_passwd}
+	,	SYSDATE
+	)
+	</insert>
+	
+	<update id="updateSample" parameterType="hashmap">
+	UPDATE 	TB_SAMPLE
+	SET		USER_EMAIL = #{user_email}
+	,		USER_NAME = #{user_name}
+	WHERE	USER_NO = #{user_no}
+	AND		USER_PASSWD = #{user_passwd}
+	</update>
+	
+	<delete id="deleteSample" parameterType="hashmap">
+	DELETE FROM TB_SAMPLE WHERE USER_NO = #{user_no}
+	</delete>
+	
+	<select id="findUserNo" parameterType="hashmap" resultType="Integer">
+	SELECT  COUNT(1) AS count
+	FROM	TB_SAMPLE
+	WHERE	USER_NO = #{user_no}
+	AND		USER_PASSWD = #{user_passwd}
+	</select>
+
+</mapper>

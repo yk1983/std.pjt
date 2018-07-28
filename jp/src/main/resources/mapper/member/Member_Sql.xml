@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<insert id="insertMember" parameterType="hashmap">
+		INSERT INTO JP_MEMBER
+		(
+			MNUM 
+		, 	MNAME
+		, 	MEMAIL
+		, 	MPASSWORD
+		, 	REGDTM
+		)
+		VALUES
+		(
+			JP_MEMBER_SEQ.NEXTVAL
+		, 	#{user_name}
+		, 	#{user_email}
+		, 	#{cfm_passwd}
+		, 	SYSDATE
+		)
+	</insert>
+	
+	<select id="login" parameterType="hashmap" resultType="hashmap">
+		SELECT	MNUM AS G_USER_NO
+		, 		MNAME AS G_USER_NAME
+		, 		MEMAIL AS G_USER_EMAIL
+		FROM 	JP_MEMBER 
+		WHERE 	MEMAIL = #{userEmail} 
+		AND 	MPASSWORD = #{userPassword}
+		AND 	DELDTM IS NULL
+	</select>
+	
+	<update id="updateName" parameterType="hashmap">
+		UPDATE JP_MEMBER 
+		SET 	MNAME = #{new_name} 
+		, 		UPDDTM = SYSDATE 
+		WHERE 	MNUM = #{user_number} 
+		AND 	MPASSWORD = #{user_passwd}
+	</update>
+	
+	<update id="updatePasswd" parameterType="hashmap">
+		UPDATE JP_MEMBER 
+		SET 	MPASSWORD = #{new_passwd} 
+		, 		UPDDTM = SYSDATE 
+		WHERE 	MNUM = #{user_number} 
+		AND 	MPASSWORD = #{cur_passwd}
+	</update>
+	
+	<update id="updateMember" parameterType="hashmap">
+		UPDATE JP_MEMBER 
+		SET 	MNAME = #{user_name} 
+		,		MPASSWORD = #{new_passwd}
+		, 		UPDDTM = SYSDATE 
+		WHERE 	MNUM = #{user_number} 
+		AND 	MPASSWORD = #{cur_passwd}
+	</update>
+	
+	<update id="deleteMember" parameterType="hashmap"> 
+		UPDATE JP_MEMBER 
+		SET 	MNAME = 'null'
+		, 		MEMAIL = 'null'
+		, 		MPASSWORD = 'null'
+		, 		DELDTM = SYSDATE 
+		WHERE 	MNUM = ${user_number}
+		AND 	MPASSWORD = #{user_passwd}
+	</update>
+</mapper>

@@ -1,0 +1,18 @@
+태그 속성 정의 (id, class)
+	=> 1. 속성의 시작단어가 4글자 초과하지 않도록 xxxx-*
+	=> 2. 단어의 연결은 하이픈(-)
+	=> 3. 속성의 단어가 의미하는 뜻을 가질 수 있도록
+	=> 4. 전체길이가 너무 길지 않도록 약 10자 내외
+
+<form id="frm-*">
+<div id="div-*">
+<table id="tbl-*">
+<span id="lbl-*">
+<input type="text|password|url|date|time|email" id="txt-*">
+<input type="checkbox" id="chk-*">
+<input type="radio" id="rdo-*">
+<select id="cbo-*">
+
+<input name="register_member_user_email"> (x) 너무 길이 길다
+<input name="txtUserId"> (x) 오타가 심함
+데이터베이스의 컬럼명칭과 동일하지 않도록 변경
