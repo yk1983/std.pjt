@@ -65,4 +65,11 @@
 		WHERE 	MNUM = ${user_number}
 		AND 	MPASSWORD = #{user_passwd}
 	</update>
+	
+	<select id="getMemberNo" parameterType="hashmap" resultType="Integer">
+		SELECT 	MNUM 
+		FROM 	JP_MEMBER 
+		WHERE 	MNAME = #{user_name} 
+		AND 	MEMAIL = #{user_email}
+	</select>
 </mapper>

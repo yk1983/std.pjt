@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.com.resolver.ParamCollector;
 import jp.com.utils.StringUtil;
 import jp.member.service.MemberService;
+import jp.schedule.service.ScheduleService;
 
 @RestController
 @RequestMapping(value = "/join")
@@ -23,6 +24,9 @@ public class JoinContoller {
 
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ScheduleService scheduleService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getJoinMemberForm(ParamCollector inParams) {
@@ -48,6 +52,17 @@ public class JoinContoller {
 		}
 		// 회원가입
 		memberService.insertMember(inParams.getMap());
+		
+		int out = memberService.getMemberNo(inParams.getMap());
+		inParams.put("G_USER_NO", out);
+		
+		// default category 추가
+		inParams.put("category_no", "99");
+		inParams.put("category_title", "default");
+		inParams.put("category_color", "f0f0f5");
+		inParams.put("category_createfg", "0");
+		scheduleService.insertCategory(inParams.getMap());
+		
 		mav.addObject("message", "회원가입이 완료되었습니다.");
 		return mav;
 	}

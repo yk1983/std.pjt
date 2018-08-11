@@ -36,7 +36,12 @@ public class MemberController {
 	public ModelAndView getMember(ParamCollector inParams) {
 		ModelAndView mav = new ModelAndView();
 		if (inParams.isEmpty()) {
-			throw new CustomGenericException("-1", "로그인해주시기 바랍니다.");
+			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
+		}
+		if (inParams.get("G_USER_NO").toString().isEmpty() 
+				|| inParams.get("G_USER_NAME").toString().isEmpty()
+				|| inParams.get("G_USER_EMAIL").toString().isEmpty()) {
+			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
 		}
 		ArrayList<String> js = new ArrayList<>();
 		js.add("member");
@@ -49,6 +54,11 @@ public class MemberController {
 	public ModelAndView getName(ParamCollector inParams) {
 		ModelAndView mav = new ModelAndView();
 		if (inParams.isEmpty()) {
+			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
+		}
+		if (inParams.get("G_USER_NO").toString().isEmpty() 
+				|| inParams.get("G_USER_NAME").toString().isEmpty()
+				|| inParams.get("G_USER_EMAIL").toString().isEmpty()) {
 			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
 		}
 		ArrayList<String> js = new ArrayList<>();
@@ -88,6 +98,11 @@ public class MemberController {
 		if (inParams.isEmpty()) {
 			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
 		}
+		if (inParams.get("G_USER_NO").toString().isEmpty() 
+				|| inParams.get("G_USER_NAME").toString().isEmpty()
+				|| inParams.get("G_USER_EMAIL").toString().isEmpty()) {
+			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
+		}
 		ArrayList<String> js = new ArrayList<>();
 		js.add("member");
 		mav.addObject("controlJs", js);
@@ -116,6 +131,11 @@ public class MemberController {
 	public ModelAndView getDelete(ParamCollector inParams) {
 		ModelAndView mav = new ModelAndView();
 		if (inParams.isEmpty()) {
+			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
+		}
+		if (inParams.get("G_USER_NO").toString().isEmpty() 
+				|| inParams.get("G_USER_NAME").toString().isEmpty()
+				|| inParams.get("G_USER_EMAIL").toString().isEmpty()) {
 			throw new CustomGenericException("-1", "로그인해주시기 바랍니다");
 		}
 		ArrayList<String> js = new ArrayList<>();

@@ -32,11 +32,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Map<String, Object> getMember(Map<String, Object> map) {
-		return memberDao.getMember(map);
-	}
-
-	@Override
 	public void updateName(Map<String, Object> map) {
 		memberDao.updateName(map);
 	}
@@ -44,6 +39,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updatePasswd(Map<String, Object> map) {
 		memberDao.updatePasswd(map);
+	}
+	
+	@Override
+	public int getMemberNo(Map<String, Object> map) {
+		return memberDao.getMemberNo(map);
 	}
 
 }

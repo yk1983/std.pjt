@@ -14,9 +14,21 @@
 	
 	<!-- /contatiner -->
 	<jsp:include page="/WEB-INF/views/member/login.jsp"></jsp:include>
+	<!-- plugin -->
+	<c:if test="${fn:length(module) > 0 }">
+		<c:forEach items="${module }" var="module" >
+			<c:if test="${module eq 'calendar' }">
+				<script src="/js/plugin/moment.min.js"></script>
+				<script src="/js/plugin/fullcalendar/fullcalendar.min.js"></script>
+			</c:if>
+			<c:if test="${module eq 'schedule' }">
+				<script src="js/control/schedule.js"></script>
+			</c:if>
+		</c:forEach>
+	</c:if>
 	<!-- js -->
 	<script src="/js/plugin/jquery.form.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script>
 	<script src="/js/expansion.js"></script>
 	<script src="/js/common.js"></script>
 	<c:if test="${fn:length(controlJs) > 0 }">

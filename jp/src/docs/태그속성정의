@@ -12,6 +12,7 @@
 <input type="checkbox" id="chk-*">
 <input type="radio" id="rdo-*">
 <select id="cbo-*">
+<a href="" id="lnk-*">
 
 <input name="register_member_user_email"> (x) 너무 길이 길다
 <input name="txtUserId"> (x) 오타가 심함

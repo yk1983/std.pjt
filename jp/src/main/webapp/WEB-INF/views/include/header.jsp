@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html>
 <head>
@@ -11,9 +12,17 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- plugin -->
+<c:if test="${fn:length(module) > 0 }">
+	<c:forEach items="${module }" var="module" >
+		<c:if test="${module eq 'calendar' }">
+			<link rel="stylesheet" href="/js/plugin/fullcalendar/fullcalendar.min.css">
+		</c:if>
+	</c:forEach>
+</c:if>
+<!-- Custom styles for this template -->
 <link rel="stylesheet" href="/css/customer.css">
 
-<!-- Custom styles for this template -->
 </head>
 <body>
 	<!-- header navibar -->
@@ -31,9 +40,9 @@
 						id="navbarPortfolioLink" role="button" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">Portfolio</a>
 					<div class="dropdown-menu" aria-labelledby="navbarPortfolioLink">
-						<a class="dropdown-item" href="#">Action</a> 
-						<a class="dropdown-item" href="#">Another action</a> 
-						<a class="dropdown-item" href="#">Something else here</a>
+						<a class="dropdown-item" href="/schedule" id="lnk-schedule">Schedule</a> 
+						<a class="dropdown-item" href="/account-book">AccountBook</a> 
+						<a class="dropdown-item" href="/commerce">Commerce</a>
 					</div>
 				</li>
 				<li class="nav-item">
@@ -45,7 +54,7 @@
 							<a class="nav-link disabled" href="/join">Sign up</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link disabled" href="#loginModal" id="btn-login-modal" data-toggle="modal"> Login</a>
+							<a class="nav-link disabled" href="#pop-login" id="btn-login-modal" data-toggle="modal"> Login</a>
 						</li>
 					</c:when>
 					<c:otherwise>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- loginModal  -->
-<div class="modal fade" id="loginModal">
+<div class="modal fade" id="pop-login">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -32,8 +32,10 @@
 							</c:choose> Remember me
 						</label>
 					</div>
-					<button type="button" class="btn btn-outline-primary"
-						id="btn-login">로그인</button>
+					<div class="text-right">
+						<button type="button" class="btn btn-outline-primary"
+								id="btn-login">로그인</button>
+					</div>
 				</form>
 			</div>
 		</div>

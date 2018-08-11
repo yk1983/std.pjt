@@ -18,7 +18,7 @@
 			</div>
 			<div class="card-footer bg-transparent text-right">
 			<p class="card-text">
-					<small class="text-muted"><a href="/member/passwd">Modify</a></small>
+					<small class="text-muted"><a href="/member/name">Modify</a></small>
 				</p>
 			</div>
 		</div>

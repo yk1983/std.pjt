@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedule">
+
+	<select id="getCategoryNo" parameterType="String" resultType="Integer">
+		SELECT NVL(MAX(CTGR_NO),0)+1 
+		FROM JP_CATEGORY 
+		WHERE MNUM = #{G_USER_NO}
+		AND CREATEFG = '1'
+	</select>
+	
+	<insert id="insertCategory" parameterType="hashmap">
+		INSERT INTO JP_CATEGORY
+		(
+			CTGR_NO
+		, 	MNUM
+		, 	CTGR_NM
+		, 	CTGR_COLOR_CD
+		,	CREATEFG
+		, 	REGDTM
+		)
+		VALUES 
+		(	
+			#{category_no}
+		, 	#{G_USER_NO}
+		, 	#{category_title}
+		, 	REPLACE(#{category_color},'#','')
+		,	#{category_createfg}
+		, 	SYSDATE
+		)
+	</insert>
+	
+	<select id="getCategoryList" parameterType="hashmap" resultType="hashmap">
+		SELECT 		CTGR_NO
+		,      		CTGR_NM
+		,      		CTGR_COLOR_CD
+		FROM 		JP_CATEGORY
+		WHERE 		MNUM = #{G_USER_NO}
+		AND 		DELDTM IS NULL
+		ORDER BY 	CTGR_NO ASC
+	</select>
+	
+	<update id="updateCategory" parameterType="hashmap">
+		update 	JP_CATEGORY 
+		SET 	CTGR_NM = #{category_title}
+		, 		CTGR_COLOR_CD = #{category_color}
+		,		UPDDTM = SYSDATE
+		WHERE 	CTGR_NO = #{category_no} 
+		AND 	DELDTM IS NULL
+	</update>
+	
+	<update id="deleteCategory" parameterType="hashmap">
+		update 	JP_CATEGORY 
+		SET 	CTGR_NM = 'default'
+		, 		CTGR_COLOR_CD = 'f0f0f5'
+		,		DELDTM = SYSDATE
+		WHERE 	CTGR_NO = #{category_no}
+		AND		CREATEFG = 1 
+	</update>
+	
+	<select id="getScheduleNo" parameterType="String" resultType="Integer">
+		SELECT NVL(MAX(SCHEDULE_NO),0)+1 
+		FROM JP_SCHEDULE 
+		WHERE MNUM = #{G_USER_NO}
+	</select>
+	
+	<insert id="insertSchedule" parameterType="hashmap">
+		INSERT INTO JP_SCHEDULE
+		(
+			SCHEDULE_NO
+		,	MNUM
+		,	CTGR_NO
+		,	SCHEDULE_TITLE
+		,	SCHEDULE_CONTENT
+		,	SCHEDULE_STD
+		,	SCHEDULE_EDD
+		,	REGDTM
+	    )
+	    VALUES
+	    (
+			#{schedule_no}
+	    ,	#{G_USER_NO}
+	    ,	#{cbo_category}
+	    ,	#{schedule_title}
+	    ,	#{schedule_content}
+	    ,	TO_DATE(REPLACE(#{start_date},'-','')||''||REPLACE(#{start_time},':','')||''||'00','YYYY-MM-DD HH24:MI:SS')
+	    ,	TO_DATE(REPLACE(#{end_date},'-','')||''||REPLACE(#{end_time},':','')||''||'00','YYYY-MM-DD HH24:MI:SS')
+	    ,	SYSDATE
+	    )
+	</insert>
+	
+	<select id="getScheduleList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	M.SCHEDULE_NO AS ID
+		,	   	M.SCHEDULE_TITLE AS TITLE
+		,      	'#'||''||S.CTGR_COLOR_CD AS COLOR
+		,      	TO_CHAR(M.SCHEDULE_STD,'YYYY-MM-DD') AS START_DT
+		,	   	TO_CHAR(M.SCHEDULE_EDD, 'YYYY-MM-DD') AS END_DT 
+		FROM 	JP_SCHEDULE M 
+		INNER
+		JOIN 	JP_CATEGORY S
+		ON 		M.CTGR_NO = S.CTGR_NO
+		WHERE	M.MNUM = 	#{G_USER_NO}
+	</select>
+	
+	<select id="getUpdateSchedulePage" parameterType="hashmap" resultType="hashmap">
+		SELECT 	M.SCHEDULE_NO AS ID
+		,	   	M.SCHEDULE_TITLE AS TITLE
+		,		M.SCHEDULE_CONTENT AS CONTENT
+		,		S.CTGR_NM AS CATEGORY
+		,      	'#'||''||S.CTGR_COLOR_CD AS COLOR
+		,      	TO_CHAR(M.SCHEDULE_STD,'YYYY-MM-DD') AS START_DT
+		,	   	TO_CHAR(M.SCHEDULE_EDD, 'YYYY-MM-DD') AS END_DT 
+		FROM 	JP_SCHEDULE M 
+		INNER
+		JOIN 	JP_CATEGORY S
+		ON 		M.CTGR_NO = S.CTGR_NO
+		WHERE	M.MNUM = 	#{G_USER_NO}	
+		AND		M.SCHEDULE_NO = #{schedule_no}
+	</select>
+</mapper>

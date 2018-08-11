@@ -21,16 +21,16 @@ public class MemberDAO extends AbstractDAO {
 		delete("member.deleteMember", map);
 	}
 
-	public Map<String, Object> getMember(Map<String, Object> map) {
-		return (Map<String, Object>) selectOne("member.getMember", map);
-	}
-
 	public void updateName(Map<String, Object> map) {
 		update("member.updateName", map);
 	}
 
 	public void updatePasswd(Map<String, Object> map) {
 		update("member.updatePasswd", map);
+	}
+	
+	public int getMemberNo(Map<String, Object> map) {
+		return  (int) selectOne("member.getMemberNo", map);
 	}
 	
 }

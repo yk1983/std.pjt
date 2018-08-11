@@ -30,6 +30,10 @@
 		});
 	}
 	
+	HTMLFormElement.prototype.clearForm = function() {
+		$(this).find(':input').not(':button, :submit, :reset, :checkbox, :radio').val('');
+		$(this).find(':checkbox, :radio').prop('checked', false);
+	}
 	
 	/**
 	 * form data 직렬화(object)
@@ -131,6 +135,12 @@
 			error: function() {}
 		};
 		Exp.trans(options);
+	});
+	
+	// main 페이지의  버튼을 클릭했을 때, 실행되는 a 태그의 href를 실행..
+	$('.btn-a-href').on('click', function() {
+		let target = $(this).data('target');
+		$(target)[0].click();
 	});
 	
 	// On every :input focusout validate if empty

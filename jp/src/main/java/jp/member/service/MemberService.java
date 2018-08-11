@@ -9,9 +9,9 @@ public interface MemberService {
 
 	void deleteMember(Map<String, Object> map);
 
-	Map<String, Object> getMember(Map<String, Object> map);
-
 	void updateName(Map<String, Object> map);
 
 	void updatePasswd(Map<String, Object> map);
+	
+	int getMemberNo(Map<String, Object> map);
 }

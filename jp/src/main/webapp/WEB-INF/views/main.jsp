@@ -18,9 +18,9 @@
 				<ul class="list-unstyled mt-3 mb-4">
 					<li>일정관리</li>
 				</ul>
-				<button type="button"
-					class="btn btn-lg btn-block btn-outline-primary">Get
-					started</button>
+				<button type="button" id="btn-schedule"
+					class="btn btn-lg btn-block btn-outline-primary btn-a-href"
+					data-target="#lnk-schedule">Get started</button>
 			</div>
 		</div>
 		<div class="card mb-4 box-shadow">
@@ -34,8 +34,8 @@
 				<ul class="list-unstyled mt-3 mb-4">
 					<li>가계부</li>
 				</ul>
-				<button type="button" class="btn btn-lg btn-block btn-outline-primary">Get
-					started</button>
+				<button type="button" class="btn btn-lg btn-block btn-outline-primary btn-a-href"
+					data-target="#lnk-schedule">Get started</button>
 			</div>
 		</div>
 		<div class="card mb-4 box-shadow">
@@ -49,8 +49,8 @@
 				<ul class="list-unstyled mt-3 mb-4">
 					<li>전자 상거래</li>
 				</ul>
-				<button type="button" class="btn btn-lg btn-block btn-outline-primary">Get
-					started</button>
+				<button type="button" class="btn btn-lg btn-block btn-outline-primary btn-a-href"
+					data-target="#lnk-schedule">Get started</button>
 			</div>
 		</div>
 	</div>
